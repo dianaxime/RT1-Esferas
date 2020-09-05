@@ -145,3 +145,33 @@ def barycentric(A, B, C, P):
     w = 1 - (cx + cy) / cz
 
     return w, v, u
+
+
+def writebmp(filename, width, height, pixels):
+    f = open(filename, 'bw')
+
+    # File header (14 bytes)
+    f.write(char('B'))
+    f.write(char('M'))
+    f.write(dword(14 + 40 + width * height * 3))
+    f.write(dword(0))
+    f.write(dword(14 + 40))
+
+    # Image header (40 bytes)
+    f.write(dword(40))
+    f.write(dword(width))
+    f.write(dword(height))
+    f.write(word(1))
+    f.write(word(24))
+    f.write(dword(0))
+    f.write(dword(width * height * 3))
+    f.write(dword(0))
+    f.write(dword(0))
+    f.write(dword(0))
+    f.write(dword(0))
+
+    # Pixel data (width x height x 3 pixels)
+    for x in range(height):
+        for y in range(width):
+            f.write(pixels[x][y])
+    f.close()
