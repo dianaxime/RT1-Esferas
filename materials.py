@@ -8,6 +8,7 @@ from utils import color
     04 de deptiembre de 2020
 '''
 
+
 class Material(object):
   def __init__(self, diffuse):
     self.diffuse = diffuse

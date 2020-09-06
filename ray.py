@@ -1,5 +1,5 @@
 from utils import *
-from sphere import *
+from sphere import Sphere
 from math import pi, tan
 from materials import *
 
@@ -21,7 +21,7 @@ class Raytracer(object):
         self.width = width
         self.height = height
         self.scene = []
-        self.current_color = WHITE
+        self.currentColor = WHITE
         self.clear()
 
     def clear(self):
@@ -33,58 +33,44 @@ class Raytracer(object):
     def write(self, filename='out.bmp'):
         writebmp(filename, self.width, self.height, self.pixels)
 
-    def display(self, filename='out.bmp'):
-        self.render()
-        self.write(filename)
-
-    def point(self, x, y, c=None):
+    def point(self, x, y, selectColor=None):
         try:
-            self.pixels[y][x] = c or self.current_color
+            self.pixels[y][x] = selectColor or self.currentColor
         except:
             pass
 
-    def scene_intersect(self, origin, direction):
+    def sceneIntersect(self, origin, direction):
         for obj in self.scene:
-            if obj.ray_intersect(origin, direction):
+            if obj.rayIntersect(origin, direction):
                 return obj.material
         return None
 
-    def cast_ray(self, orig, direction):
+    def castRay(self, origin, direction):
         # esta funcion devuelve un color gracias al rayo
-        impacted_material = self.scene_intersect(orig, direction)
-        if impacted_material:
-            return impacted_material.diffuse
+        impactedMaterial = self.sceneIntersect(origin, direction)
+        if impactedMaterial:
+            return impactedMaterial.diffuse
         else:
             return BLUE
 
-    """
-    def cast_ray(self, orig, direction, sphere):
-    if sphere.ray_intersect(orig, direction):
-      return color(255, 0, 0)
-    else:
-      return color(0, 0, 255)
-      """
-
     def render(self):
-        alfa = int(pi/2)
+        fov = int(pi / 2) # field of view
         for y in range(self.height):
             for x in range(self.width):
-                i = (2*(x + 0.5)/self.width - 1) * \
-                    self.width/self.height*tan(alfa/2)
-                j = (1 - 2*(y + 0.5)/self.height)*tan(alfa/2)
+                i = (2 * (x + 0.5) / self.width - 1) * self.width / self.height * tan(fov / 2)
+                j = (1 - 2 * (y + 0.5) / self.height) * tan(fov / 2)
                 direction = norm(V3(i, j, -1))
-                self.pixels[y][x] = self.cast_ray(V3(0, 0, 0), direction)
+                self.pixels[y][x] = self.castRay(V3(0, 0, 0), direction)
 
-    """
-  def basicRender(self):
-  #Esto llena la pantalla de un color degradado
-    for x in range(self.width):
-      for y in range(self.height):
-        r = int((x/self.width)*255) if x/self.width < 1 else 1
-        g = int((y/self.height)*255) if y/self.height < 1 else 1
-        b = 0
-        self.pixels[y][x] = color(r, g, b)
-        """
+
+    def gradientBackground(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                r = int((x / self.width) * 255) if x / self.width < 1 else 1
+                g = int((y / self.height) * 255) if y / self.height < 1 else 1
+                b = 0
+                self.pixels[y][x] = color(r, g, b)
+    
 
 
 r = Raytracer(1000, 1000)
@@ -108,4 +94,4 @@ r.scene = [
     Sphere(V3(0, 0, -10), 1.8, snow),
     Sphere(V3(0, 3, -12), 2.8, snow)
 ]
-r.display()
+r.write()
