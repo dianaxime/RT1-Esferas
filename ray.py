@@ -21,12 +21,12 @@ class Raytracer(object):
         self.width = width
         self.height = height
         self.scene = []
-        self.currentColor = WHITE
+        self.currentColor = BLACK
         self.clear()
 
     def clear(self):
         self.pixels = [
-            [BLUE for x in range(self.width)]
+            [BLACK for x in range(self.width)]
             for y in range(self.height)
         ]
 
@@ -51,7 +51,7 @@ class Raytracer(object):
         if impactedMaterial:
             return impactedMaterial.diffuse
         else:
-            return BLUE
+            return self.currentColor
 
     def render(self):
         fov = int(pi / 2) # field of view
@@ -75,23 +75,8 @@ class Raytracer(object):
 
 r = Raytracer(1000, 1000)
 r.scene = [
-    Sphere(V3(-0.6, -2.1, -10), 0.1, button),
-    Sphere(V3(-0.2, -1.9, -10), 0.1, button),
-    Sphere(V3(0.2, -1.9, -10), 0.1, button),
-    Sphere(V3(0.6, -2.1, -10), 0.1, button),
-
-    Sphere(V3(0, -2.5, -10), 0.3, carrot),
-
-    Sphere(V3(0.5, -3, -10), 0.1, button),
-    Sphere(V3(-0.5, -3, -10), 0.1, button),
-    Sphere(V3(0.5, -3, -10), 0.2, eye),
-    Sphere(V3(-0.5, -3, -10), 0.2, eye),
-
-    Sphere(V3(0, -0.4, -10), 0.3, button),
-    Sphere(V3(0, 1, -10), 0.4, button),
-    Sphere(V3(0, 3, -10), 0.5, button),
-    Sphere(V3(0, -2.5, -10), 1.3, snow),
-    Sphere(V3(0, 0, -10), 1.8, snow),
-    Sphere(V3(0, 3, -12), 2.8, snow)
+    Sphere(V3(0, -1.5, -10), 1.5, ivory),
+    Sphere(V3(0, -1, -12), 2, snow),
 ]
+r.render()
 r.write()
