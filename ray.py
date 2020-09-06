@@ -1,7 +1,7 @@
-from utils import *
+from utils import writebmp, norm, V3, color
 from sphere import Sphere
 from math import pi, tan
-from materials import *
+from materials import lightblue, body, eye, nose, button
 
 '''
     Diana Ximena de León Figueroa
@@ -13,7 +13,7 @@ from materials import *
 
 BLACK = color(0, 0, 0)
 WHITE = color(255, 255, 255)
-BLUE = color(0, 49, 82)
+BLUE = color(60, 80, 125)
 
 
 class Raytracer(object):
@@ -21,12 +21,12 @@ class Raytracer(object):
         self.width = width
         self.height = height
         self.scene = []
-        self.currentColor = BLACK
+        self.currentColor = BLUE
         self.clear()
 
     def clear(self):
         self.pixels = [
-            [BLACK for x in range(self.width)]
+            [self.currentColor for x in range(self.width)]
             for y in range(self.height)
         ]
 
@@ -75,8 +75,22 @@ class Raytracer(object):
 
 r = Raytracer(1000, 1000)
 r.scene = [
-    Sphere(V3(0, -1.5, -10), 1.5, ivory),
-    Sphere(V3(0, -1, -12), 2, snow),
+    Sphere(V3(0.7, -5.05, -15), 0.15, button),
+    Sphere(V3(-0.8, -5.05, -15), 0.15, button),
+    Sphere(V3(0.75, -5, -15), 0.3, eye),
+    Sphere(V3(-0.75, -5, -15), 0.3, eye),
+    Sphere(V3(0, -4.5, -15), 0.4, nose),
+    Sphere(V3(-1, -4, -15), 0.2, button),
+    Sphere(V3(-0.4, -3.5, -15), 0.2, button),
+    Sphere(V3(0.4, -3.5, -15), 0.2, button),
+    Sphere(V3(1, -4, -15), 0.2, button),
+    Sphere(V3(0, -2, -15), 0.25, button),
+    Sphere(V3(0, 0.25, -15), 0.5, button),
+    Sphere(V3(0, 3, -15), 0.75, button),
+    Sphere(V3(0, -3.5, -12), 1.5, body),
+    Sphere(V3(0, -1, -12), 2, body),
+    Sphere(V3(0, 2.5, -12), 2.5, body),
+    Sphere(V3(0, 0, -11), 5, lightblue),
 ]
 r.render()
 r.write()

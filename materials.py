@@ -14,16 +14,14 @@ class Material(object):
     self.diffuse = diffuse
 
 
-IVORY = color(100, 100, 80)
-RUBBER = color(80, 10, 0)
-SNOW = color(222, 231, 236)
-BLACK = color(0, 0, 0)
-WHITE = color(250, 250, 250)
-ORANGE = color(255, 165, 0)
+WHITE = color(215, 200, 200)
+BONE = color(240, 225, 205)
+ORANGE = color(240, 60, 40)
+BLACK = color(10, 10, 10)
+LIGHTBLUE = color(100, 130, 200)
 
-ivory = Material(diffuse=IVORY)
-rubber = Material(diffuse=RUBBER)
-snow = Material(diffuse=SNOW)
-button = Material(diffuse=BLACK)
-eye = Material(diffuse=WHITE)
-carrot = Material(diffuse=ORANGE)
+body = Material(diffuse = BONE)
+button = Material(diffuse = BLACK)
+eye = Material(diffuse = WHITE)
+nose = Material(diffuse = ORANGE)
+lightblue = Material(diffuse = LIGHTBLUE)
