@@ -46,7 +46,6 @@ class Raytracer(object):
         return None
 
     def castRay(self, origin, direction):
-        # esta funcion devuelve un color gracias al rayo
         impactedMaterial = self.sceneIntersect(origin, direction)
         if impactedMaterial:
             return impactedMaterial.diffuse
